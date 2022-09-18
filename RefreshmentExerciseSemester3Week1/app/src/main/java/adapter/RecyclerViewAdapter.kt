@@ -5,28 +5,32 @@ import Model.animal
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.example.refreshmentexercisesemester3week1.R
 import com.example.refreshmentexercisesemester3week1.home
 import com.example.refreshmentexercisesemester3week1.masukin_data_activity
 import kotlinx.android.synthetic.main.cardview_foranimal.view.*
+import java.io.File
 
 class RecyclerViewAdapter(val listanimal: ArrayList<animal>, val cardListener: CardListener):
     RecyclerView.Adapter<RecyclerViewAdapter.viewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): RecyclerViewAdapter.viewHolder {
+    ): viewHolder {
         val layoutInflator = LayoutInflater.from(parent.context)
         val view = layoutInflator.inflate(R.layout.cardview_foranimal, parent, false)
         return viewHolder(view, cardListener)
     }
 
-    override fun onBindViewHolder(holder: RecyclerViewAdapter.viewHolder, position: Int) {
+    override fun onBindViewHolder(holder: viewHolder, position: Int) {
         holder.setData(listanimal[position])
     }
 
@@ -49,13 +53,17 @@ class RecyclerViewAdapter(val listanimal: ArrayList<animal>, val cardListener: C
 
         fun setData(data: animal) {
 
-
-
             name_card.text = data.nama
             type_card.text = data.jenis
             age_card.text = data.usia.toString()
+
             if (data.imageuri != null) {
+                Log.d("HI",data.nama)
+
+                Log.d("HI",data.imageuri.toString())
                 picture_card.setImageURI(data.imageuri)
+            } else {
+                picture_card.setImageResource(R.drawable.animalfarmlogo)
             }
 
             edit.setOnClickListener {
